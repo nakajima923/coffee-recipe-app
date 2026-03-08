@@ -110,46 +110,48 @@ export default async function RecipeDetailPage({
             {backLabel}
           </Link>
 
-          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <ShareRecipeButton
-              recipeId={recipe.id}
-              recipeTitle={recipe.title}
+                recipeId={recipe.id}
+                recipeTitle={recipe.title}
             />
 
-            <CopyRecipeButton
-              recipe={{
-                id: recipe.id,
-                title: recipe.title,
-                bean_name: recipe.bean_name,
-                roast_level: recipe.roast_level,
-                grind_size: recipe.grind_size,
-                bean_amount_g: Number(recipe.bean_amount_g),
-                water_amount_ml: recipe.water_amount_ml,
-                pours_count: recipe.pours_count,
-                bloom_time_sec: recipe.bloom_time_sec,
-                total_time_sec: recipe.total_time_sec,
-                memo: recipe.memo,
-              }}
-              pours={(pours ?? []).map((pour) => ({
-                pour_index: pour.pour_index,
-                water_ml: pour.water_ml,
-                elapsed_time_sec: pour.elapsed_time_sec,
-                note: pour.note,
-              }))}
-            />
+            {!isOwner && (
+                <CopyRecipeButton
+                recipe={{
+                    id: recipe.id,
+                    title: recipe.title,
+                    bean_name: recipe.bean_name,
+                    roast_level: recipe.roast_level,
+                    grind_size: recipe.grind_size,
+                    bean_amount_g: Number(recipe.bean_amount_g),
+                    water_amount_ml: recipe.water_amount_ml,
+                    pours_count: recipe.pours_count,
+                    bloom_time_sec: recipe.bloom_time_sec,
+                    total_time_sec: recipe.total_time_sec,
+                    memo: recipe.memo,
+                }}
+                pours={(pours ?? []).map((pour) => ({
+                    pour_index: pour.pour_index,
+                    water_ml: pour.water_ml,
+                    elapsed_time_sec: pour.elapsed_time_sec,
+                    note: pour.note,
+                }))}
+                />
+            )}
 
             {isOwner && (
-              <>
+                <>
                 <Link
-                  href={`/recipes/${recipe.id}/edit`}
-                  className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700"
+                    href={`/recipes/${recipe.id}/edit`}
+                    className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700"
                 >
-                  編集
+                    編集
                 </Link>
                 <DeleteRecipeButton recipeId={recipe.id} />
-              </>
+                </>
             )}
-          </div>
+            </div>
         </div>
 
         <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
