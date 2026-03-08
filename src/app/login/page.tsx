@@ -19,7 +19,7 @@ export default function LoginPage() {
     <main className="min-h-screen bg-stone-50 text-stone-900">
       <div className="mx-auto flex min-h-screen max-w-md items-center px-6">
         <div className="w-full rounded-3xl border border-stone-200 bg-white p-8 shadow-sm">
-          <p className="text-sm text-stone-500">Coffee Recipe Log</p>
+          <Link href="/" className="text-sm text-stone-500">Coffee Recipe Log</Link>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight">
             ログイン
           </h1>
