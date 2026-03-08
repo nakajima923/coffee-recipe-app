@@ -27,16 +27,16 @@ export default async function HomePage() {
             ) : (
               <>
                 <Link
-                  href="/login"
-                  className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
-                >
-                  ログイン
-                </Link>
-                <Link
                   href="/signup"
                   className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
                 >
                   はじめて使う
+                </Link>
+                <Link
+                  href="/login"
+                  className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+                >
+                  ログイン
                 </Link>
               </>
             )}
