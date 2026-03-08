@@ -81,12 +81,14 @@ export function BrewTimer({ pours }: Props) {
                 </p>
               </div>
             </div>
+            {currentPour.note && (
             <div className="rounded-2xl bg-stone-800 p-4">
-              <p className="text-xs text-stone-400">メモ</p>
-              <p className="mt-2 text-sm leading-6 text-stone-200">
-                {currentPour.note || "メモなし"}
-              </p>
+                <p className="text-xs text-stone-400">メモ</p>
+                <p className="mt-2 text-sm leading-6 text-stone-200">
+                {currentPour.note}
+                </p>
             </div>
+            )}
           </div>
         ) : (
           <p className="mt-3 text-sm text-stone-300">投数データがありません。</p>

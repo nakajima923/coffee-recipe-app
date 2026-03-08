@@ -102,30 +102,39 @@ export default async function RecipeDetailPage({
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
       <div className="mx-auto max-w-4xl px-6 py-10">
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <Link
-            href="/dashboard"
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <Link
+            href={backHref}
             className="text-sm text-stone-600 transition hover:text-stone-900"
-          >
+        >
             {backLabel}
-          </Link>
+        </Link>
 
-          <Link
-            href={`/brew/${recipe.id}`}
-            className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-medium text-white"
-            >
-            抽出モード
-          </Link>
-
+        <div className="w-full sm:w-auto">
             <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
-            <ShareRecipeButton
+            <Link
+                href={`/brew/${recipe.id}`}
+                className="inline-flex w-full items-center justify-center rounded-2xl bg-stone-900 px-4 py-3 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto"
+            >
+                抽出モード
+            </Link>
+
+            <div className="inline-flex w-full items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100 sm:w-auto">
+                <ShareRecipeButton
                 recipeId={recipe.id}
                 recipeTitle={recipe.title}
-            />
+                />
 
-            {!isOwner && (
+                {isOwner ? (
+                <Link
+                    href={`/recipes/${recipe.id}/edit`}
+                    className="inline-flex w-full items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100 sm:w-auto"
+                >
+                    編集
+                </Link>
+                ) : (
                 <CopyRecipeButton
-                recipe={{
+                    recipe={{
                     id: recipe.id,
                     title: recipe.title,
                     bean_name: recipe.bean_name,
@@ -137,28 +146,24 @@ export default async function RecipeDetailPage({
                     bloom_time_sec: recipe.bloom_time_sec,
                     total_time_sec: recipe.total_time_sec,
                     memo: recipe.memo,
-                }}
-                pours={(pours ?? []).map((pour) => ({
+                    }}
+                    pours={(pours ?? []).map((pour) => ({
                     pour_index: pour.pour_index,
                     water_ml: pour.water_ml,
                     elapsed_time_sec: pour.elapsed_time_sec,
                     note: pour.note,
-                }))}
+                    }))}
                 />
-            )}
+                )}
+            </div>
 
             {isOwner && (
-                <>
-                <Link
-                    href={`/recipes/${recipe.id}/edit`}
-                    className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700"
-                >
-                    編集
-                </Link>
+                <div className="inline-flex w-full items-center justify-center rounded-2xl border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 hover:bg-red-100 hover:text-red-800 sm:w-auto">
                 <DeleteRecipeButton recipeId={recipe.id} />
-                </>
+                </div>
             )}
             </div>
+        </div>
         </div>
 
         <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
@@ -236,61 +241,56 @@ export default async function RecipeDetailPage({
           </div>
 
         
-            <div className="mt-6">
-                <h2 className="text-lg font-semibold">各投の記録</h2>
+        <div className="mt-4">
+        <h2 className="text-lg font-semibold">各投の記録</h2>
 
-                <div className="mt-4 space-y-4">
-                    {pours && pours.length > 0 ? (
-                    pours.map((pour, index) => (
-                        <div key={pour.id} className="relative pl-7">
-                        {index !== pours.length - 1 && (
-                            <div className="absolute left-[13px] top-8 h-full w-px bg-stone-300" />
-                        )}
+        <div className="mt-4 space-y-3">
+            {pours && pours.length > 0 ? (
+            pours.map((pour) => (
+                <div
+                key={pour.id}
+                className="rounded-3xl border border-stone-200 bg-stone-50 p-4"
+                >
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-300 bg-white text-sm font-medium text-stone-700">
+                    {pour.pour_index}
+                    </div>
 
-                        <div className="absolute left-0 top-1 h-7 w-7 rounded-full border border-stone-300 bg-white shadow-sm" />
+                    <div className="grid flex-1 grid-cols-2 gap-3">
+                    <div className="rounded-2xl bg-white p-4">
+                        <p className="text-[11px] text-stone-500">時間</p>
+                        <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+                        {formatSeconds(pour.elapsed_time_sec)}
+                        </p>
+                    </div>
 
-                        <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
-                            <div className="flex flex-col gap-4">
-                            <div className="flex items-center justify-between">
-                                <p className="text-sm font-medium text-stone-500">
-                                {pour.pour_index}投目
-                                </p>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="rounded-2xl bg-white p-4">
-                                <p className="text-xs text-stone-500">時間</p>
-                                <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-                                    {formatSeconds(pour.elapsed_time_sec)}
-                                </p>
-                                </div>
-
-                                <div className="rounded-2xl bg-white p-4">
-                                <p className="text-xs text-stone-500">湯量</p>
-                                <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-                                    {pour.water_ml}
-                                    <span className="ml-1 text-base font-medium text-stone-500 sm:text-lg">
-                                    ml
-                                    </span>
-                                </p>
-                                </div>
-                            </div>
-
-                            <div className="rounded-2xl bg-white p-4">
-                                <p className="text-xs text-stone-500">メモ</p>
-                                <p className="mt-2 text-sm leading-6 text-stone-700">
-                                {pour.note || "メモなし"}
-                                </p>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    ))
-                    ) : (
-                    <p className="text-sm text-stone-600">投数データはありません。</p>
-                    )}
+                    <div className="rounded-2xl bg-white p-4">
+                        <p className="text-[11px] text-stone-500">湯量</p>
+                        <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+                        {pour.water_ml}
+                        <span className="ml-1 text-base font-medium text-stone-500 sm:text-lg">
+                            ml
+                        </span>
+                        </p>
+                    </div>
+                    </div>
                 </div>
+
+                {pour.note && (
+                    <div className="mt-3 rounded-2xl bg-white p-4">
+                    <p className="text-[11px] text-stone-500">メモ</p>
+                    <p className="mt-2 text-sm leading-6 text-stone-700">
+                        {pour.note}
+                    </p>
+                    </div>
+                )}
                 </div>
+            ))
+            ) : (
+            <p className="text-sm text-stone-600">投数データはありません。</p>
+            )}
+        </div>
+        </div>
 
           <div className="mt-6 rounded-2xl border border-stone-200 p-4">
             <p className="text-sm text-stone-500">メモ</p>
