@@ -62,6 +62,7 @@ export function RecipeForm({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -167,10 +168,7 @@ export function RecipeForm({
         water_amount_ml: Number(data.water_amount_ml),
         pours_count: Number(data.pours_count),
         water_temp_c: Number(data.water_temp_c) || null,
-        total_time_sec:
-            normalizedPours.length > 0
-                ? normalizedPours[normalizedPours.length - 1].elapsed_time_sec
-                : null,
+        total_time_sec: Number(data.total_time_sec) || null,
         memo: data.memo.trim() || null,
         is_favorite: Boolean(data.is_favorite),
         is_public: Boolean(data.is_public),
@@ -355,8 +353,16 @@ export function RecipeForm({
                 })}
                 type="number"
                 min={0}
-                placeholder="92"
+                placeholder="90"
             />
+            </div>
+
+              <div>
+                <Label className="mb-2 block">総抽出時間</Label>
+                <TimeInput
+                value={watch("total_time_sec") || 0}
+                onChange={(seconds) => setValue("total_time_sec", seconds)}
+                />
             </div>
         </div>
 
