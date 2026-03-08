@@ -9,7 +9,7 @@
 
 # Demo
 
-https://your-domain.vercel.app
+https://coffee-recipe-app-fawn.vercel.app/
 
 ---
 
