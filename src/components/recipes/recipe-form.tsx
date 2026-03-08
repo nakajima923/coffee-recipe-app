@@ -317,7 +317,7 @@ export function RecipeForm({
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <Label className="mb-2 block">豆量(g)</Label>
             <Input

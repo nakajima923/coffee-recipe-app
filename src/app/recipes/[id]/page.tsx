@@ -110,6 +110,13 @@ export default async function RecipeDetailPage({
             {backLabel}
           </Link>
 
+          <Link
+            href={`/brew/${recipe.id}`}
+            className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-medium text-white"
+            >
+            抽出モード
+          </Link>
+
             <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <ShareRecipeButton
                 recipeId={recipe.id}
