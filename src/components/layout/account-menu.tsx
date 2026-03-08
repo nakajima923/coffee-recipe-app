@@ -42,6 +42,11 @@ export function AccountMenu({ email }: AccountMenuProps) {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
+            <Link href="/settings/profile">プロフィール設定</Link>
+        </DropdownMenuItem>
+
+
+        <DropdownMenuItem asChild>
           <Link href="/public">公開レシピ</Link>
         </DropdownMenuItem>
 

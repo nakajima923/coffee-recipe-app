@@ -36,18 +36,9 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/recipes") ||
     pathname.startsWith("/welcome")
 
-  const isAuthRoute =
-    pathname.startsWith("/login") || pathname.startsWith("/signup")
-
   if (!user && isProtectedRoute) {
     const url = request.nextUrl.clone()
     url.pathname = "/login"
-    return NextResponse.redirect(url)
-  }
-
-  if (user && isAuthRoute) {
-    const url = request.nextUrl.clone()
-    url.pathname = "/dashboard"
     return NextResponse.redirect(url)
   }
 

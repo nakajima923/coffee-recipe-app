@@ -29,6 +29,7 @@ export default async function DashboardPage() {
   const { data: recipes, error } = await supabase
     .from("recipes")
     .select("*")
+    .eq("user_id",user.id)
     .order("created_at", { ascending: false })
 
   return (

@@ -71,7 +71,7 @@ export function WelcomeForm({ email }: WelcomeFormProps) {
         <input
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
-          placeholder="たとえば Tatsuya"
+          placeholder="たとえば apple"
           className="w-full rounded-xl border border-stone-300 px-3 py-2 outline-none transition focus:border-stone-500"
         />
       </div>
