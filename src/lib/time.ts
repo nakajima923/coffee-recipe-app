@@ -29,3 +29,16 @@ export function mmssToSeconds(value: string) {
 
   return minutes * 60 + seconds
 }
+
+export function parseFlexibleTime(value: string) {
+  const digits = value.replace(/\D/g, "")
+
+  if (digits.length === 0) return null
+
+  const seconds = Number(digits.slice(-2))
+  const minutes = Number(digits.slice(0, -2) || "0")
+
+  if (seconds >= 60) return null
+
+  return minutes * 60 + seconds
+}

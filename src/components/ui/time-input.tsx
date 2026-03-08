@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { isValidMMSS, mmssToSeconds, secondsToMMSS } from "@/lib/time"
+import { parseFlexibleTime } from "@/lib/time"
 
 type Props = {
   value: number
@@ -34,19 +35,8 @@ export function TimeInput({ value, onChange, disabled = false }: Props) {
   function handleBlur() {
     isFocusedRef.current = false
 
-    if (text.trim() === "") {
-      setText(secondsToMMSS(value))
-      setHasError(true)
-      return
-    }
 
-    if (!isValidMMSS(text)) {
-      setText(secondsToMMSS(value))
-      setHasError(true)
-      return
-    }
-
-    const seconds = mmssToSeconds(text)
+    const seconds = parseFlexibleTime(text)
 
     if (seconds == null) {
       setText(secondsToMMSS(value))
