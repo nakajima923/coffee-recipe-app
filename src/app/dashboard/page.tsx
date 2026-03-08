@@ -1,98 +1,176 @@
 import Link from "next/link"
-import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
-import { RecipeList } from "@/components/recipes/recipe-list"
-import { MobileMenu } from "@/components/layout/mobile-menu"
-import { AccountMenu } from "@/components/layout/account-menu"
 
-export default async function DashboardPage() {
+export default async function HomePage() {
   const supabase = await createClient()
 
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user) {
-    redirect("/login")
-  }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id")
-    .eq("id", user.id)
-    .maybeSingle()
-
-  if (!profile) {
-    redirect("/welcome")
-  }
-
-  const { data: recipes, error } = await supabase
-    .from("recipes")
-    .select("*")
-    .eq("user_id",user.id)
-    .order("created_at", { ascending: false })
-
   return (
-    <main className="min-h-screen bg-stone-100 text-stone-900">
-      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10">
-        <section className="mb-6 overflow-hidden rounded-[2rem] border border-stone-200 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-700 p-5 text-stone-50 shadow-sm sm:mb-8 sm:p-8">
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="text-sm text-stone-300">Coffee Recipe Log</p>
-              <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
-                あなたの抽出レシピを、
+    <main className="min-h-screen bg-stone-50 text-stone-900">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 sm:px-6 sm:py-12">
+        <header className="flex items-center justify-between">
+          <div>
+            <p className="text-sm text-stone-500">Coffee Recipe Log</p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+                >
+                  ログイン
+                </Link>
+                <Link
+                  href="/signup"
+                  className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                >
+                  はじめて使う
+                </Link>
+              </>
+            )}
+          </div>
+        </header>
+
+        <section className="flex flex-1 items-center py-12 sm:py-20">
+          <div className="grid w-full gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <p className="text-sm font-medium text-stone-500">
+                Brew beautifully, remember clearly.
+              </p>
+
+              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
+                コーヒーの淹れ方を、
                 <br />
                 きれいに残す。
               </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-stone-300">
-                豆量、水量、投数、各投のメモまで。毎回の抽出を記録して、
-                自分だけのベストレシピを育てていくためのアプリです。
+
+              <p className="mt-6 max-w-2xl text-base leading-8 text-stone-600">
+                豆量、水量、投数、時間、メモまで。
+                毎回の抽出レシピを記録して、自分のベストレシピを育てていくためのサービスです。
+                公開レシピを見たり、友人のレシピをコピーして自分流に調整することもできます。
+              </p>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                {user ? (
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex items-center justify-center rounded-xl bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                  >
+                    Dashboardへ
+                  </Link>
+                ) : (
+                  <>
+                    <Link
+                      href="/signup"
+                      className="inline-flex items-center justify-center rounded-xl bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                    >
+                      はじめて使う
+                    </Link>
+                    <Link
+                      href="/login"
+                      className="inline-flex items-center justify-center rounded-xl border border-stone-300 bg-white px-5 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+                    >
+                      ログイン
+                    </Link>
+                  </>
+                )}
+
+                <Link
+                  href="/public"
+                  className="inline-flex items-center justify-center rounded-xl border border-stone-300 bg-white px-5 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+                >
+                  公開レシピを見る
+                </Link>
+              </div>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+                  <p className="text-sm font-medium text-stone-900">記録する</p>
+                  <p className="mt-2 text-sm leading-6 text-stone-600">
+                    時間・湯量・メモを投数ごとに整理できます。
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+                  <p className="text-sm font-medium text-stone-900">見返す</p>
+                  <p className="mt-2 text-sm leading-6 text-stone-600">
+                    あとからレシピを検索して、自分の抽出を振り返れます。
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+                  <p className="text-sm font-medium text-stone-900">共有する</p>
+                  <p className="mt-2 text-sm leading-6 text-stone-600">
+                    公開したレシピを友人と共有して、コピーして試せます。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm sm:p-6">
+              <div className="rounded-[1.5rem] bg-gradient-to-br from-stone-900 via-stone-800 to-stone-700 p-5 text-stone-50">
+                <p className="text-sm text-stone-300">Sample Recipe</p>
+                <h2 className="mt-2 text-2xl font-semibold">Ethiopia / V60</h2>
+                <p className="mt-2 text-sm text-stone-300">
+                  Light Roast / 92℃
+                </p>
+
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <p className="text-xs text-stone-300">豆量</p>
+                    <p className="mt-1 text-2xl font-semibold">15g</p>
+                  </div>
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <p className="text-xs text-stone-300">水量</p>
+                    <p className="mt-1 text-2xl font-semibold">240ml</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 space-y-3">
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-stone-300">1投目</span>
+                      <span className="text-lg font-semibold">0:00</span>
+                    </div>
+                    <p className="mt-2 text-sm text-stone-200">40ml</p>
+                  </div>
+
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-stone-300">2投目</span>
+                      <span className="text-lg font-semibold">0:45</span>
+                    </div>
+                    <p className="mt-2 text-sm text-stone-200">120ml</p>
+                  </div>
+
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-stone-300">3投目</span>
+                      <span className="text-lg font-semibold">1:30</span>
+                    </div>
+                    <p className="mt-2 text-sm text-stone-200">240ml</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="mt-4 text-xs leading-6 text-stone-500">
+                ※ このサービスは個人開発中のため、予告なく仕様変更・停止・終了する場合があります。
+                必要なレシピはご自身でも控えを残してください。
               </p>
             </div>
-
-            <div className="shrink-0">
-              <div className="sm:hidden">
-                <MobileMenu email={user?.email} />
-              </div>
-              <div className="hidden sm:block">
-                <AccountMenu email={user?.email} />
-              </div>
-            </div>
           </div>
-
-          <div className="mt-5 sm:mt-6">
-            <Link
-              href="/recipes/new"
-              className="inline-flex w-full items-center justify-center rounded-xl bg-white px-4 py-3 text-sm font-medium text-stone-900 transition hover:opacity-90 sm:w-auto"
-            >
-              レシピを追加
-            </Link>
-            <Link
-              href="/public"
-              className="inline-flex w-full items-center justify-center rounded-xl border border-stone-500/40 bg-stone-800 px-4 py-3 text-sm font-medium text-stone-100 transition hover:bg-stone-700 sm:w-auto"
-            >
-              公開レシピを見る
-            </Link>
-          </div>
-        </section>
-
-        <section className="rounded-3xl border border-stone-200 bg-white p-4 shadow-sm sm:p-6">
-          <div className="mb-5">
-            <h2 className="text-xl font-semibold tracking-tight">
-              My Recipes
-            </h2>
-            <p className="mt-1 text-sm text-stone-600">
-              検索や焙煎度で絞り込みながら、レシピを見返せます。
-            </p>
-          </div>
-
-          {error ? (
-            <p className="text-sm text-red-600">レシピの取得に失敗しました。</p>
-          ) : recipes ? (
-            <RecipeList recipes={recipes} />
-          ) : (
-            <p className="text-sm text-stone-600">レシピを取得できませんでした。</p>
-          )}
         </section>
       </div>
     </main>
