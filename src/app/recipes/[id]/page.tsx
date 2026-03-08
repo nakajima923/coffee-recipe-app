@@ -230,47 +230,60 @@ export default async function RecipeDetailPage({
 
         
             <div className="mt-6">
-            <h2 className="text-lg font-semibold">各投の記録</h2>
+                <h2 className="text-lg font-semibold">各投の記録</h2>
 
-            <div className="mt-4 space-y-4">
-                {pours && pours.length > 0 ? (
-                pours.map((pour, index) => (
-                    <div key={pour.id} className="relative pl-6">
-                    {index !== pours.length - 1 && (
-                        <div className="absolute left-[11px] top-8 h-full w-px bg-stone-300" />
+                <div className="mt-4 space-y-4">
+                    {pours && pours.length > 0 ? (
+                    pours.map((pour, index) => (
+                        <div key={pour.id} className="relative pl-7">
+                        {index !== pours.length - 1 && (
+                            <div className="absolute left-[13px] top-8 h-full w-px bg-stone-300" />
+                        )}
+
+                        <div className="absolute left-0 top-1 h-7 w-7 rounded-full border border-stone-300 bg-white shadow-sm" />
+
+                        <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
+                            <div className="flex flex-col gap-4">
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm font-medium text-stone-500">
+                                {pour.pour_index}投目
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="rounded-2xl bg-white p-4">
+                                <p className="text-xs text-stone-500">時間</p>
+                                <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+                                    {formatSeconds(pour.elapsed_time_sec)}
+                                </p>
+                                </div>
+
+                                <div className="rounded-2xl bg-white p-4">
+                                <p className="text-xs text-stone-500">湯量</p>
+                                <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+                                    {pour.water_ml}
+                                    <span className="ml-1 text-base font-medium text-stone-500 sm:text-lg">
+                                    ml
+                                    </span>
+                                </p>
+                                </div>
+                            </div>
+
+                            <div className="rounded-2xl bg-white p-4">
+                                <p className="text-xs text-stone-500">メモ</p>
+                                <p className="mt-2 text-sm leading-6 text-stone-700">
+                                {pour.note || "メモなし"}
+                                </p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    ))
+                    ) : (
+                    <p className="text-sm text-stone-600">投数データはありません。</p>
                     )}
-
-                    <div className="absolute left-0 top-1 h-6 w-6 rounded-full border border-stone-300 bg-white" />
-
-                    <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
-                        <div className="flex flex-col gap-2">
-                        <div className="flex items-center justify-between">
-                            <p className="font-medium text-stone-900">
-                            {pour.pour_index}投目
-                            </p>
-                            <span className="rounded-full bg-white px-3 py-1 text-sm text-stone-700">
-                            {formatSeconds(pour.elapsed_time_sec)}
-                            </span>
-                        </div>
-
-                        <div className="flex items-center gap-2 text-sm text-stone-700">
-                            <span className="rounded-full bg-white px-3 py-1">
-                            {pour.water_ml}ml
-                            </span>
-                        </div>
-
-                        <p className="text-sm text-stone-600">
-                            {pour.note || "メモなし"}
-                        </p>
-                        </div>
-                    </div>
-                    </div>
-                ))
-                ) : (
-                <p className="text-sm text-stone-600">投数データはありません。</p>
-                )}
-            </div>
-            </div>
+                </div>
+                </div>
 
           <div className="mt-6 rounded-2xl border border-stone-200 p-4">
             <p className="text-sm text-stone-500">メモ</p>
