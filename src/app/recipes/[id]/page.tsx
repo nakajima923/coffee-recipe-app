@@ -102,69 +102,16 @@ export default async function RecipeDetailPage({
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
       <div className="mx-auto max-w-4xl px-6 py-10">
-        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <Link
-            href={backHref}
-            className="text-sm text-stone-600 transition hover:text-stone-900"
-        >
-            {backLabel}
-        </Link>
-
-        <div className="w-full sm:w-auto">
-            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+          <div className="mb-5 flex items-start justify-between gap-3">
             <Link
-                href={`/brew/${recipe.id}`}
-                className="inline-flex w-full items-center justify-center rounded-2xl bg-stone-900 px-4 py-3 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto"
+              href={backHref}
+              className="text-sm text-stone-600 transition hover:text-stone-900"
             >
-                抽出モード
+              {backLabel}
             </Link>
 
-            <div className="inline-flex w-full items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100 sm:w-auto">
-                <ShareRecipeButton
-                recipeId={recipe.id}
-                recipeTitle={recipe.title}
-                />
-
-                {isOwner ? (
-                <Link
-                    href={`/recipes/${recipe.id}/edit`}
-                    className="inline-flex w-full items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100 sm:w-auto"
-                >
-                    編集
-                </Link>
-                ) : (
-                <CopyRecipeButton
-                    recipe={{
-                    id: recipe.id,
-                    title: recipe.title,
-                    bean_name: recipe.bean_name,
-                    roast_level: recipe.roast_level,
-                    grind_size: recipe.grind_size,
-                    bean_amount_g: Number(recipe.bean_amount_g),
-                    water_amount_ml: recipe.water_amount_ml,
-                    pours_count: recipe.pours_count,
-                    bloom_time_sec: recipe.bloom_time_sec,
-                    total_time_sec: recipe.total_time_sec,
-                    memo: recipe.memo,
-                    }}
-                    pours={(pours ?? []).map((pour) => ({
-                    pour_index: pour.pour_index,
-                    water_ml: pour.water_ml,
-                    elapsed_time_sec: pour.elapsed_time_sec,
-                    note: pour.note,
-                    }))}
-                />
-                )}
-            </div>
-
-            {isOwner && (
-                <div className="inline-flex w-full items-center justify-center rounded-2xl border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 hover:bg-red-100 hover:text-red-800 sm:w-auto">
-                <DeleteRecipeButton recipeId={recipe.id} />
-                </div>
-            )}
-            </div>
-        </div>
-        </div>
+            {isOwner && <DeleteRecipeButton recipeId={recipe.id} />}
+          </div>
 
         <section className="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
           <div className="mb-6">
@@ -299,6 +246,55 @@ export default async function RecipeDetailPage({
             </p>
           </div>
         </section>
+      </div>
+      <div className="sticky bottom-0 z-20 mt-6 border-t border-stone-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+        <div className="mx-auto max-w-4xl px-4 py-6 pb-28 sm:px-6 sm:py-8 sm:pb-24">
+          <div className="grid grid-cols-3 gap-2 sm:max-w-md sm:ml-auto">
+            <Link
+              href={`/brew/${recipe.id}`}
+              className="inline-flex items-center justify-center rounded-2xl bg-stone-900 px-4 py-4 text-sm font-medium text-white transition hover:opacity-90"
+            >
+              抽出モード
+            </Link>
+
+            <ShareRecipeButton
+              recipeId={recipe.id}
+              recipeTitle={recipe.title}
+              compact
+            />
+
+            {isOwner ? (
+              <Link
+                href={`/recipes/${recipe.id}/edit`}
+                className="inline-flex items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-4 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+              >
+                編集
+              </Link>
+            ) : (
+              <CopyRecipeButton
+                recipe={{
+                  id: recipe.id,
+                  title: recipe.title,
+                  bean_name: recipe.bean_name,
+                  roast_level: recipe.roast_level,
+                  grind_size: recipe.grind_size,
+                  bean_amount_g: Number(recipe.bean_amount_g),
+                  water_amount_ml: recipe.water_amount_ml,
+                  pours_count: recipe.pours_count,
+                  total_time_sec: recipe.total_time_sec,
+                  memo: recipe.memo,
+                }}
+                pours={(pours ?? []).map((pour) => ({
+                  pour_index: pour.pour_index,
+                  water_ml: pour.water_ml,
+                  elapsed_time_sec: pour.elapsed_time_sec,
+                  note: pour.note,
+                }))}
+                compact
+              />
+            )}
+          </div>
+        </div>
       </div>
     </main>
   )

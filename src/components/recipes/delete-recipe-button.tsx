@@ -70,7 +70,7 @@ export function DeleteRecipeButton({
         <Button
           type="button"
           variant="outline"
-          className="border-red-200 bg-red-50 text-red-700 hover:bg-red-100 hover:text-red-800"
+          className="inline-flex items-center justify-center rounded-xl border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-100 hover:text-red-800"
         >
           削除
         </Button>

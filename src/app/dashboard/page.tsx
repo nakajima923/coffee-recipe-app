@@ -37,7 +37,7 @@ export default async function DashboardPage() {
   return (
     <main className="min-h-screen bg-stone-100 text-stone-900">
       <div className="mx-auto max-w-4xl px-4 py-5 sm:px-6 sm:py-8">
-        <section className="mb-5 rounded-[1.75rem] border border-stone-200 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-700 p-5 text-stone-50 shadow-sm">
+        <section className="mb-5 rounded-[1.75rem] border border-stone-200ariga bg-gradient-to-br from-stone-900 via-stone-800 to-stone-700 p-5 text-stone-50 shadow-sm">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="text-xs text-stone-300">Coffee Recipe Log</p>

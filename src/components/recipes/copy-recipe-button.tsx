@@ -29,9 +29,10 @@ type Recipe = {
 type Props = {
   recipe: Recipe
   pours: Pour[]
+  compact?: boolean
 }
 
-export function CopyRecipeButton({ recipe, pours }: Props) {
+export function CopyRecipeButton({ recipe, pours, compact = false }: Props) {
   const router = useRouter()
   const supabase = createClient()
   const [isCopying, setIsCopying] = useState(false)
@@ -103,13 +104,17 @@ export function CopyRecipeButton({ recipe, pours }: Props) {
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      disabled={isCopying}
-      className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:opacity-60"
+      <button
+    type="button"
+    onClick={handleCopy}
+    disabled={isCopying}
+    className={
+      compact
+        ? "inline-flex items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-4 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:opacity-60"
+        : "rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100 disabled:opacity-60"
+      }
     >
-      {isCopying ? "コピー中..." : "自分のレシピにコピー"}
+      {isCopying ? "コピー中..." : "レシピをコピー"}
     </button>
   )
 }
