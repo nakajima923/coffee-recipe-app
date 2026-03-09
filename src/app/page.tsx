@@ -51,9 +51,7 @@ export default async function HomePage() {
               </p>
 
               <h1 className="mt-4 text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
-                コーヒーの淹れ方を、
-                <br />
-                きれいに残す。
+                コーヒーレシピ記録
               </h1>
 
               <p className="mt-6 max-w-2xl text-base leading-8 text-stone-600">
