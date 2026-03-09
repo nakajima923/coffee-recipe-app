@@ -188,56 +188,56 @@ export default async function RecipeDetailPage({
           </div>
 
         
-        <div className="mt-4">
-        <h2 className="text-lg font-semibold">各投の記録</h2>
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold">各投の記録</h2>
 
-        <div className="mt-4 space-y-3">
-            {pours && pours.length > 0 ? (
-            pours.map((pour) => (
-                <div
-                key={pour.id}
-                className="rounded-3xl border border-stone-200 bg-stone-50 p-4"
-                >
-                <div className="flex items-start justify-between gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-300 bg-white text-sm font-medium text-stone-700">
-                    {pour.pour_index}
+            <div className="mt-3 space-y-2.5">
+              {pours && pours.length > 0 ? (
+                pours.map((pour) => (
+                  <div
+                    key={pour.id}
+                    className="rounded-3xl border border-stone-200 bg-stone-50 p-3"
+                  >
+                    <div className="flex items-start gap-2.5">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-stone-300 bg-white text-xs font-medium text-stone-700">
+                        {pour.pour_index}
+                      </div>
+
+                      <div className="grid flex-1 grid-cols-2 gap-2">
+                        <div className="rounded-2xl bg-white p-3">
+                          <p className="text-[10px] text-stone-500">時間</p>
+                          <p className="mt-1 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">
+                            {formatSeconds(pour.elapsed_time_sec)}
+                          </p>
+                        </div>
+
+                        <div className="rounded-2xl bg-white p-3">
+                          <p className="text-[10px] text-stone-500">湯量</p>
+                          <p className="mt-1 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">
+                            {pour.water_ml}
+                            <span className="ml-1 text-sm font-medium text-stone-500 sm:text-base">
+                              ml
+                            </span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="grid flex-1 grid-cols-2 gap-3">
-                    <div className="rounded-2xl bg-white p-4">
-                        <p className="text-[11px] text-stone-500">時間</p>
-                        <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-                        {formatSeconds(pour.elapsed_time_sec)}
+                    {pour.note && (
+                      <div className="mt-2 rounded-2xl bg-white p-3">
+                        <p className="text-[10px] text-stone-500">メモ</p>
+                        <p className="mt-1.5 text-sm leading-5 text-stone-700">
+                          {pour.note}
                         </p>
-                    </div>
-
-                    <div className="rounded-2xl bg-white p-4">
-                        <p className="text-[11px] text-stone-500">湯量</p>
-                        <p className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-                        {pour.water_ml}
-                        <span className="ml-1 text-base font-medium text-stone-500 sm:text-lg">
-                            ml
-                        </span>
-                        </p>
-                    </div>
-                    </div>
-                </div>
-
-                {pour.note && (
-                    <div className="mt-3 rounded-2xl bg-white p-4">
-                    <p className="text-[11px] text-stone-500">メモ</p>
-                    <p className="mt-2 text-sm leading-6 text-stone-700">
-                        {pour.note}
-                    </p>
-                    </div>
-                )}
-                </div>
-            ))
-            ) : (
-            <p className="text-sm text-stone-600">投数データはありません。</p>
-            )}
-        </div>
-        </div>
+                      </div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-stone-600">投数データはありません。</p>
+              )}
+            </div>
+          </div>
 
           <div className="mt-6 rounded-2xl border border-stone-200 p-4">
             <p className="text-sm text-stone-500">メモ</p>
