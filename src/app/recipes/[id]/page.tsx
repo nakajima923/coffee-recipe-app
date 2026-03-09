@@ -280,6 +280,7 @@ export default async function RecipeDetailPage({
                   grind_size: recipe.grind_size,
                   bean_amount_g: Number(recipe.bean_amount_g),
                   water_amount_ml: recipe.water_amount_ml,
+                  bloom_time_sec: recipe.bloom_time_sec,
                   pours_count: recipe.pours_count,
                   total_time_sec: recipe.total_time_sec,
                   memo: recipe.memo,
