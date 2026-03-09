@@ -252,7 +252,7 @@ export default async function RecipeDetailPage({
           <div className="grid grid-cols-3 gap-2 sm:max-w-md sm:mx-auto">
             <Link
               href={`/brew/${recipe.id}`}
-              className="inline-flex items-center justify-center rounded-2xl bg-stone-900 px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-2xl bg-stone-900 px-4 py-2 text-sm font-medium leading-none text-white transition hover:opacity-90"
             >
               抽出モード
             </Link>
@@ -266,7 +266,7 @@ export default async function RecipeDetailPage({
             {isOwner ? (
               <Link
                 href={`/recipes/${recipe.id}/edit`}
-                className="inline-flex items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+                className="inline-flex items-center justify-center rounded-2xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium leading-none text-stone-700 transition hover:bg-stone-100"
               >
                 編集
               </Link>
