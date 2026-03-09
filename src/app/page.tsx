@@ -105,7 +105,7 @@ export default async function HomePage() {
                 <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
                   <p className="text-sm font-medium text-stone-900">共有できる</p>
                   <p className="mt-2 text-sm leading-6 text-stone-600">
-                    将来的に友人同士でレシピを見せ合うこともできます。
+                    友人同士でレシピを見せ合うこともできます。
                   </p>
                 </div>
               </div>

@@ -45,7 +45,7 @@ export default async function DashboardPage() {
                 こんにちは、{displayName} さん
               </h1>
               <p className="mt-2 text-sm leading-6 text-stone-300">
-                今日の抽出レシピを記録しましょう。
+                お気に入りの抽出レシピを記録しましょう。
               </p>
             </div>
 
